@@ -1,12 +1,72 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Document</title>
+  <style>
+    #box {
+      position: absolute;
+      width: 800px;
+      height: 600px;
+      background: #ccc;
+      top: 100px;
+      left: 100px;
+    }
+  </style>
 </head>
+
 <body>
-  
+  <input type="button" value="弹出球" id="btn">
+  <div id="box"></div>
+
+  <script>
+    let btn = document.getElementById('btn');
+    let box = document.getElementById('box');
+
+    btn.onclick = function () {
+      // 随机生成颜色
+      let color = '#' + Math.random().toString(16).substr(2, 6).toUpperCase();
+      // 随机生成大小
+      let ballSize = Math.floor(Math.random() * 50) + 20
+
+      let ball = document.createElement('div');
+      ball.style.cssText = 'position:absolute;border-radius:50%';
+      ball.style.width = ballSize + 'px';
+      ball.style.height = ballSize + 'px';
+      ball.style.backgroundColor = color;
+
+      box.appendChild(ball);
+
+      // 小球初始位置
+      let left = (box.clientWidth - ball.offsetWidth) / 2;
+      let top = (box.clientHeight - ball.offsetHeight) / 2;
+
+      ball.style.left = left + 'px';
+      ball.style.top = top + 'px';
+
+      // 移动频率
+      let x = Math.floor(Math.random() * 10) + 1;
+      let y = Math.floor(Math.random() * 10) + 1;
+
+      setInterval(() => {
+        left += x;
+        top += y;
+
+        if (top < 0 || top > (box.clientHeight - ball.offsetHeight)) {
+          y = -y;
+        }
+        if (left < 0 || left > (box.clientWidth - ball.offsetWidth)) {
+          x = -x;
+        }
+
+        ball.style.left = left + 'px';
+        ball.style.top = top + 'px';
+      }, 15);
+    }
+  </script>
 </body>
+
 </html>
