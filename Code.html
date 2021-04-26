@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>验证码生成与校验</title>
+  <style>
+    .code-wrapper {
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      width: 300px;
+      height: 150px;
+      margin: -50px 0 0 -150px;
+      border: 1px solid #000;
+      border-radius: 5px;
+    }
+
+    .code-show {
+      padding: 10px 0;
+    }
+
+    #checkCode {
+      display: inline-block;
+      width: 100px;
+      height: 40px;
+      line-height: 40px;
+      text-align: center;
+      margin-left: 30px;
+      font-size: 20px;
+      background: #ccc;
+      cursor: pointer;
+    }
+
+    #change {
+      margin-left: 5px;
+      font-size: 12px;
+      color: blue;
+      cursor: pointer;
+    }
+
+    .code-input {
+      margin: 10px 0 2px 30px;
+    }
+
+    #codeInput {
+      width: 80px;
+      height: 20px;
+      padding: 2px 5px;
+    }
+
+    #textShow {
+      height: 15px;
+      line-height: 15px;
+      margin: 2px 0;
+      font-size: 12px;
+      color: red;
+    }
+
+    #btn {
+      display: block;
+      width: 70px;
+      height: 25px;
+      margin-left: 30px;
+      border: 0;
+      outline: none;
+      border-radius: 3px;
+      background: orange;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="code-wrapper">
+    <div class="code-show">
+      <span class="code" id="checkCode"></span>
+      <a id="change">看不清，换一张</a>
+    </div>
+    <div class="code-input">
+      <label for="codeInput">验证码：</label>
+      <input type="text" id="codeInput">
+      <p id="textShow"></p>
+    </div>
+    <input type="button" value="确定" id="btn">
+  </div>
+
+  <script>
+    window.onload = function () {
+      let code = randomCode();
+
+      function randomCode() {
+        // 生成随机字符串
+        let upper = Math.random().toString(36).substr(2).toUpperCase(); // 大写
+        let lower = Math.random().toString(36).substr(2); // 小写
+
+        let str = upper + lower;
+
+        let arr = [];
+
+        while (arr.length < 6) {
+          arr.push(str[Math.floor(Math.random() * str.length)])
+        }
+
+        let code = arr.join('');
+
+        return code;
+      }
+
+      
+      let checkCode = document.getElementById('checkCode');
+      let change = document.getElementById('change');
+      let btn = document.getElementById('btn');
+      
+      checkCode.innerHTML = code;
+
+      checkCode.onclick = function () {
+        checkCode.innerHTML = randomCode();
+      }
+
+      change.onclick = function () {
+        checkCode.innerHTML = randomCode();
+      }
+
+      btn.onclick = function () {
+
+        let codeInput = document.getElementById('codeInput');
+        let code = checkCode.innerHTML;
+        let inputCode = codeInput.value;
+        let text = document.getElementById('textShow');
+
+        // 不论大小写
+        if (code.toLowerCase() !== inputCode.toLowerCase()) {
+          text.innerHTML = '验证码错误';
+          codeInput.value = '';
+          checkCode.innerHTML = randomCode();
+        } else {
+          text.innerHTML = '';
+        }
+      }
+    }
+  </script>
+</body>
+
+</html>
