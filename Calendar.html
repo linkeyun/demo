@@ -1,12 +1,170 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Document</title>
+  <style>
+    * {
+      margin: 0px;
+      padding: 0px;
+    }
+
+    #data {
+      width: 280px;
+      border: 1px solid #000;
+      margin: 20px auto;
+    }
+
+    #data>p {
+      display: flex;
+    }
+
+    #data>h5 {
+      text-align: center;
+    }
+
+    #data>p>span {
+      padding: 0 10px;
+    }
+
+    #prev,
+    #next {
+      cursor: pointer;
+    }
+
+    #year {
+      flex: 1;
+      text-align: center;
+    }
+
+    #title {
+      overflow: hidden;
+      list-style: none;
+      background: #ccc;
+    }
+
+    #title>li {
+      float: left;
+      width: 40px;
+      height: 26px;
+      line-height: 26px;
+      text-align: center;
+    }
+
+    #date {
+      overflow: hidden;
+      list-style: none;
+    }
+
+    #date>li {
+      float: left;
+      width: 34px;
+      height: 34px;
+      margin: 1px 1px;
+      border: 2px solid rgba(0, 0, 0, 0);
+      line-height: 34px;
+      text-align: center;
+      cursor: pointer;
+    }
+
+    #date>.hover:hover {
+      border: 2px solid red;
+    }
+
+    .active {
+      background: #ccc;
+      color: red;
+    }
+  </style>
 </head>
+
 <body>
-  
+  <div id="data">
+    <p>
+      <span id="prev">上一月</span>
+      <span id="year"></span>
+      <span id="next">下一月</span>
+    </p>
+    <h5 id="month"></h5>
+    <ul id="title">
+      <li>日</li>
+      <li>一</li>
+      <li>二</li>
+      <li>三</li>
+      <li>四</li>
+      <li>五</li>
+      <li>六</li>
+    </ul>
+    <ul id="date"></ul>
+  </div>
+
+  <script>
+    let date = new Date();
+
+    add();
+
+    function add() {
+      let cYear = date.getFullYear(); // 获取当前年份
+      let cMonth = date.getMonth(); // 获取当前月份
+      let cDay = date.getDate(); // 获取当前日期
+
+      let cWeed = new Date(cYear, cMonth, 1).getDay(); // 获取每个月的第一天是周几
+      let days = new Date(cYear, cMonth + 1, -1).getDate() + 1; // 获取每个月的天数
+
+      let arr = [
+        "一月",
+        "二月",
+        "三月",
+        "四月",
+        "五月",
+        "六月",
+        "七月",
+        "八月",
+        "九月",
+        "十月",
+        "十一月",
+        "十二月"
+      ];
+
+      let year = document.getElementById('year');
+      let month = document.getElementById('month');
+      let weed = document.getElementById('date');
+
+      year.innerHTML = cYear;
+      month.innerHTML = arr[cMonth];
+
+      let html = '';
+
+      for (let i = 0; i < cWeed; i++) {
+        html += '<li></li>';
+      }
+
+      for (let i = 1; i <= days; i++) {
+        if (i == cDay) {
+          html += '<li class="active">' + i + '</li>';
+        } else {
+          html += '<li class="hover">' + i + '</li>';
+        }
+      }
+      weed.innerHTML = html;
+    }
+
+    let prev = document.getElementById('prev');
+    let next = document.getElementById('next');
+
+    prev.onclick = function () {
+      date.setMonth(date.getMonth() - 1);
+      add();
+    };
+
+    next.onclick = function () {
+      date.setMonth(date.getMonth() + 1);
+      add();
+    };
+    </script>
 </body>
+
 </html>
