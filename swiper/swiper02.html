@@ -12,26 +12,31 @@
 
 <body>
   <div id="swiperWrapper">
-    <ul id="swiperContent">
-      <li><img src="./img/1.jpg" alt=""></li>
-      <li><img src="./img/2.jpg" alt=""></li>
-      <li><img src="./img/3.jpg" alt=""></li>
-      <li><img src="./img/4.jpg" alt=""></li>
-      <li><img src="./img/1.jpg" alt=""></li>
-    </ul>
+    <ul id="swiperContent"></ul>
     <div id="arrow">
       <a href="javascript:;" class="iconfont" id="prev">&#xe685;</a>
       <a href="javascript:;" class="iconfont" id="next">&#xe687;</a>
     </div>
-    <div id="active-nav">
-      <a href="javascript:;"></a>
-      <a href="javascript:;"></a>
-      <a href="javascript:;"></a>
-      <a href="javascript:;"></a>
-    </div>
+    <div id="activeNav"></div>
   </div>
 
-  <script src="./swiper.js"></script>
+  <script src="./swiper02.js"></script>
+  <script>
+    swiperImg = [{
+      id: '001',
+      imgSrc: './img/1.jpg'
+    }, {
+      id: '002',
+      imgSrc: './img/2.jpg'
+    }, {
+      id: '003',
+      imgSrc: './img/3.jpg'
+    }, {
+      id: '004',
+      imgSrc: './img/4.jpg'
+    }];
+    swiper(swiperImg);
+  </script>
 </body>
 
 </html>

@@ -11,17 +11,17 @@
   overflow: hidden;
 }
 
-#swiper {
+#swiperContent {
   position: absolute;
   list-style: none;
 }
 
-#swiper li {
+#swiperContent li {
   width: 640px;
   float: left;
 }
 
-#swiper li img {
+#swiperContent li img {
   width: 100%;
 }
 
@@ -56,16 +56,19 @@
   background: #000;
 }
 
-#active {
+#activeNav {
   position: absolute;
   bottom: 10px;
 }
 
-#active a {
+#activeNav a {
   float: left;
   width: 10px;
   height: 10px;
   margin: 0 5px;
   border-radius: 50%;
   background: rgba(0, 0, 0, 0.5);
+}
+#activeNav .active {
+  background: #fff;
 }

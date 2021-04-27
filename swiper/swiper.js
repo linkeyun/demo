@@ -1,14 +1,13 @@
 window.onload = function () {
-
-  const swiper = document.getElementById('swiper');
-  const imgList = swiper.getElementsByTagName('img');
+  const swiperContent = document.getElementById('swiperContent');
+  const imgList = swiperContent.getElementsByTagName('img');
   // swiper容器宽度
-  swiper.style.width = 640 * imgList.length + 'px';
+  swiperContent.style.width = 640 * imgList.length + 'px';
 
-  const active = document.getElementById('active');
+  const activeNav = document.getElementById('activeNav');
   const swiperWrapper = document.getElementById('swiperWrapper');
   // swiper圆点居中
-  active.style.left = (swiperWrapper.offsetWidth - active.offsetWidth) / 2 + 'px';
+  activeNav.style.left = (swiperWrapper.offsetWidth - activeNav.offsetWidth) / 2 + 'px';
 
   const arrow = document.getElementById('arrow');
   arrow.style.top = (swiperWrapper.offsetHeight - arrow.offsetHeight) / 2 + 'px';
@@ -16,8 +15,8 @@ window.onload = function () {
   let index = 0;
   let timer = null;
 
-  const activeList = active.getElementsByTagName('a');
-  activeList[index].style.backgroundColor = '#fff';
+  const activeList = activeNav.getElementsByTagName('a');
+  activeList[index].className = 'active';
 
   for (let i = 0; i < activeList.length; i++) {
     activeList[i].index = i;
@@ -25,7 +24,7 @@ window.onload = function () {
       clearInterval(timer);
       index = this.index;
       setActive();
-      animation(swiper, -640 * index, 0, function () {
+      animation(swiperContent, -640 * index, 0, function () {
         auto();
       });
     };
@@ -57,9 +56,9 @@ window.onload = function () {
     index--;
     if (index < 0) {
       index = imgList.length - 2;
-      swiper.style.left = -(swiper.offsetWidth - 640) + 'px';
+      swiperContent.style.left = -(swiperContent.offsetWidth - 640) + 'px';
     }
-    animation(swiper, -640 * index, 10, function () {
+    animation(swiperContent, -640 * index, 10, function () {
       setActive();
       auto();
     });
@@ -70,7 +69,7 @@ window.onload = function () {
     clearInterval(timer);
     index++;
     index %= imgList.length;
-    animation(swiper, -640 * index, 10, function () {
+    animation(swiperContent, -640 * index, 10, function () {
       setActive();
       auto();
     });
@@ -80,12 +79,12 @@ window.onload = function () {
     // 判断当前索引是否为最后一张图片
     if (index >= imgList.length - 1) {
       index = 0;
-      swiper.style.left = 0;
+      swiperContent.style.left = 0;
     }
     for (let i = 0; i < activeList.length; i++) {
-      activeList[i].style.backgroundColor = '';
+      activeList[i].className = '';
     }
-    activeList[index].style.backgroundColor = '#fff';
+    activeList[index].className = 'active';
   }
 
   function animation(obj, target, speed, callback) {
