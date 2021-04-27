@@ -20,27 +20,25 @@ window.onload = function () {
   activeList[index].style.backgroundColor = '#fff';
 
   for (let i = 0; i < activeList.length; i++) {
-    activeList[i].index = i
+    activeList[i].index = i;
     activeList[i].onclick = function () {
-      clearInterval(timer)
-      index = this.index
-      setNav();
-      move(swiper, -640 * index, 0, function () {
+      clearInterval(timer);
+      index = this.index;
+      setActive();
+      animation(swiper, -640 * index, 0, function () {
         auto();
-      })
-    }
+      });
+    };
   }
 
   const left = document.getElementById('prev');
   const right = document.getElementById('next');
 
   left.onclick = function () {
-    clearInterval(timer)
     prev();
   };
 
   right.onclick = function () {
-    clearInterval(timer)
     next();
   };
 
@@ -53,42 +51,32 @@ window.onload = function () {
     }, 3000);
   }
 
-  function next() {
-    index++;
-    index %= imgList.length;
-    move(swiper, -640 * index, 10, function () {
-      setNav();
-      auto();
-    })
-  }
-
   function prev() {
+    // 上一张
+    clearInterval(timer);
     index--;
     if (index < 0) {
       index = imgList.length - 2;
-      swiper.style.left = '-2560px';
+      swiper.style.left = -(swiper.offsetWidth - 640) + 'px';
     }
-    move(swiper, -640 * index, 10, function () {
-      setNav();
+    animation(swiper, -640 * index, 10, function () {
+      setActive();
       auto();
-    })
+    });
   }
 
+  function next() {
+    // 下一张
+    clearInterval(timer);
+    index++;
+    index %= imgList.length;
+    animation(swiper, -640 * index, 10, function () {
+      setActive();
+      auto();
+    });
+  }
 
-
-  // autoChange();
-
-  // function autoChange() {
-  //   timer = setInterval(() => {
-  //     index++;
-  //     index %= imgList.length - 1;
-  //     move(swiper, -640 * (index + 1), 10, function () {
-  //       setNav();
-  //     })
-  //   }, 3000);
-  // }
-
-  function setNav() {
+  function setActive() {
     // 判断当前索引是否为最后一张图片
     if (index >= imgList.length - 1) {
       index = 0;
@@ -100,7 +88,7 @@ window.onload = function () {
     activeList[index].style.backgroundColor = '#fff';
   }
 
-  function move(obj, target, speed, callback) {
+  function animation(obj, target, speed, callback) {
     clearInterval(obj.timer);
     // 元素当前位置
     const current = parseInt(getComputedStyle(obj, null)['left']);
@@ -111,7 +99,7 @@ window.onload = function () {
     }
 
     obj.timer = setInterval(() => {
-      const oldValue = parseInt(getComputedStyle(obj, null)['left'])
+      const oldValue = parseInt(getComputedStyle(obj, null)['left']);
       let newValue = oldValue + speed;
 
       if ((speed <= 0 && newValue < target) || (speed >= 0 && newValue > target)) {
