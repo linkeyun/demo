@@ -21,15 +21,15 @@ function checkEmail(input) {
   if (re.test(input.value.trim())) {
     showSuccess(input);
   } else {
-    showError(input, '请输入正确的邮箱')
+    showError(input, '请输入有效邮箱')
   }
 }
 
 function checkRequired(inputArr) {
   let isRequired = false;
-  inputArr.forEach(function(input) {
-    if(input.value.trim() === '') {
-      showError(input, `${input.placeholder}`)
+  inputArr.forEach(function (input) {
+    if (input.value.trim() === '') {
+      showError(input, `请输入${input.name}`)
     } else {
       showSuccess(input);
     }
@@ -46,16 +46,42 @@ function checkLength(input, min, max) {
 }
 
 function checkPasswordsMatch(input1, input2) {
-  if(input1.value !== input2.value) {
+  if (input1.value !== input2.value) {
     showError(input2, '密码输入不一致')
   }
+}
+
+username.onblur = function () {
+  checkLength(username, 6, 15);
+}
+
+email.onblur = function () {
+  checkEmail(email);
+}
+
+password.onblur = function () {
+  checkLength(password, 6, 25);
+
+  if (this.value.trim() !== '') {
+    checkPasswordsMatch(password, password2);
+  }
+
+}
+
+password2.onblur = function () {
+  checkLength(password2, 6, 25);
+
+  if (this.value.trim() !== '') {
+    checkPasswordsMatch(password, password2);
+  }
+
 }
 
 form.addEventListener('submit', function (e) {
   e.preventDefault();
 
-  if(!checkRequired([username, email, password, password2])) {
-    checkLength(username, 3, 15);
+  if (!checkRequired([username, email, password, password2])) {
+    checkLength(username, 6, 15);
     checkLength(password, 6, 25);
     checkEmail(email);
     checkPasswordsMatch(password, password2);
