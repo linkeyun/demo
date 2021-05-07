@@ -29,7 +29,7 @@ function checkRequired(inputArr) {
   let isRequired = false;
   inputArr.forEach(function (input) {
     if (input.value.trim() === '') {
-      showError(input, `请输入${input.name}`)
+      showError(input, `${input.placeholder}`)
     } else {
       showSuccess(input);
     }
@@ -83,6 +83,7 @@ form.addEventListener('submit', function (e) {
   if (!checkRequired([username, email, password, password2])) {
     checkLength(username, 6, 15);
     checkLength(password, 6, 25);
+    checkLength(password2, 6, 25);
     checkEmail(email);
     checkPasswordsMatch(password, password2);
   }
